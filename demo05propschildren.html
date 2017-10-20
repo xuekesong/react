@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+	</head>
+	<body>
+	  <div id="example"></div>
+	  <script type="text/babel">
+	  	  var NotesList = React.createClass({
+      render: function () {
+        return (
+          <ol>
+            {
+              React.Children.map(this.props.children, function (children) {
+                return <li>{children}</li>
+              })
+            }
+          </ol>
+        )
+      }
+    })
+    ReactDOM.render(
+      <NotesList>
+        <span>A young man and a young woman were sitting behind me</span>
+      </NotesList>,
+      document.getElementById('example')
+    )
+	  </script>
+	  
+	</body>
+</html>

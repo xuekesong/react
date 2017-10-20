@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>htmlArr demo</title>
+		<link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+	</head>
+	<body>
+	  <div id="example"></div>
+	  <script type="text/babel">
+	  	  var htmlArr = [
+	  	    <h1>Hello World!</h1>,
+	  	    <h2>Lask week i went to the theatre</h2>,
+	  	    <h3>I had evry good seat</h3>
+	  	  ];
+	  	  ReactDOM.render(
+	  	    <div>{htmlArr}</div>,
+	  	    document.getElementById('example')
+	  	  )
+	  </script>
+	</body>
+</html>

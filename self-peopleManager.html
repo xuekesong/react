@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>人员管理系统</title>
+		<link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+	</head>
+	<body>
+	  <div id="example"></div>
+	  <script type="text/babel">
+	    var managerArr = [
+	      {
+	        name: 'pig',
+	        age: '25',
+	        identity: 'boss',
+	        sex: 'gril'
+	      },
+	      {
+	        name: 'rabbit',
+          age: '12',
+          identity: 'manager',
+          sex: 'gril'
+	      },
+	      {
+	        name: 'bird',
+          age: '9',
+          identity: 'boy',
+          sex: 'boy'
+	      },
+	      {
+	        name: 'elephant',
+          age: '30',
+          identity: 'group lader',
+          sex: 'boy'
+	      },
+	      {
+	        name: 'dove',
+          age: '16',
+          identity: 'manager',
+          sex: 'gril'
+	      },
+	      {
+          name: 'butterfly',
+          age: '10',
+          identity: 'gril',
+          sex: 'gril'
+        },
+        {
+          name: 'flower',
+          age: '13',
+          identity: 'manager',
+          sex: 'boy'
+        }
+	    ]
+	  	  var ManagerHeader = React.createClass({
+	  	    render: function () {
+	  	      return (
+	  	        <div className="manager">
+	  	          <h1>人员管理系统</h1>
+	  	          <div className="manager-header">
+	  	            <input className="manager-header__search" type="search" placeholder="search..."/>
+	  	            <label className="manager-header__condition">人员筛选</label>
+	  	            <select>
+	  	              <option>全部</option>
+	  	              <option>boss</option>
+	  	              <option>manager</option>
+	  	              <option>group lader</option>
+	  	              <option>gril</option>
+	  	              <option>boy</option>
+	  	            </select>
+	  	            <label className="manager-header__condition">排序方式</label>
+	  	            <select>
+	  	              <option>年龄</option>
+	  	              <option>身份</option>
+	  	            </select>
+	  	          </div>
+	  	        </div>
+	  	      )
+	  	    }
+	  	  })
+	  	  var DetailInfo = React.createClass({
+	  	    render: function () {
+	  	      return (
+	  	        <tr>
+	  	          <td>{this.props.item.name}</td>
+	  	          <td>{this.props.item.age}</td>
+	  	          <td>{this.props.item.identity}</td>
+	  	          <td>{this.props.item.sex}</td>
+	  	          <td>
+	  	            <a className="information-table__delete">删除</a>
+	  	            <a className="information-table__desc">详情</a>
+	  	          </td>
+	  	        </tr>
+	  	      )
+	  	    }
+	  	  })
+	  	  var ManagerInfo = React.createClass({
+	  	    render: function () {
+	  	      let items = [];
+	  	      if (0 == managerArr.length) {
+	  	        items.push(<tr><th colSpan="5">暂无用户</th></tr>);
+	  	      } else {
+	  	        managerArr.forEach((item) => {
+	  	          items.push(<DetailInfo item={item}/>);
+	  	        })
+	  	      }
+	  	      return (
+	  	        <div className="information">
+	  	          <table className="information-table" style={{'width': '100%'}}>
+	  	            <tr className="information-table__tr">
+	  	              <th>姓名</th>
+	  	              <th>年龄</th>
+	  	              <th>身份</th>
+	  	              <th>性别</th>
+	  	              <th>操作</th>
+	  	            </tr>
+	  	            <tbody className="information-table__tbody">{items}</tbody>
+	  	          </table>
+	  	        </div>
+	  	      )
+	  	    }
+	  	  })
+	  	  var ManagerNewAdd = React.createClass({
+	  	    handleAddClick (evt) {
+	  	      evt.preventDefault();
+	  	      let item = {};
+	  	      let addForm = React.findDOMNode(this.refs.addForm);
+	  	      let sex = addForm.querySelector('#addSex');
+	  	      let identity = addForm.querySelector('#addDescrible');
+	  	      let single_desc = addForm.querySelector('#addSingle');
+	  	      
+	  	      item.name = addForm.querySelector('#addName').value();
+	  	      item.age = addForm.querySelector('#addAge').value();
+	  	      item.identity = identity.option[identity.selectedIndex].value;
+	  	      item.sex = sex.option[sex.selectedIndex].value;
+	  	      
+	  	      if ('' == item.name || '' == item.age || '' == item.identity) {
+	  	        this.refs.tipsUnDone.display = 'block';
+	  	        return;
+	  	      }
+	  	      
+	  	      managerArr.push(item);
+	  	      addForm.reset();
+	  	    },
+	  	    render() {
+	  	      return (
+	  	        <div className="manager-add" ref="addForm">
+	  	          <h3 className="manager-add__title">人员新增</h3>
+	  	          <form className="manager-add__form" ref="addForm">
+	  	            <label>姓名</label>
+	  	            <input type="text" name="" id="addName" value="" placeholder="You Name"/>
+	  	            <label>年龄</label>
+	  	            <input type="number" name="" id="addAge" value="" placeholder="Your Age(0-150)"/>
+	  	            <label>性别</label>
+	  	            <select className="manager-add__form__select" id="addSex">
+	  	              <option>男</option>
+	  	              <option>女</option>
+	  	            </select>
+	  	            <label>身份描述</label>
+	  	            <select className="manager-add__form__select" id="addDescrible">
+	  	              <option>boss</option>
+                  <option>manager</option>
+                  <option>group lader</option>
+                  <option>gril</option>
+                  <option>boy</option>
+	  	            </select>
+	  	            <label>个人描述</label>
+	  	            <textarea id="addSingle"></textarea>
+	  	            <p ref="tips" className="tips">提交成功</p>
+	  	            <p ref="tipsUnDone" className="tips">请录入完整的人员信息</p>
+	  	            <p ref="tipsAge" className="tips">请录入正确的年龄</p>
+	  	            <div>
+	  	            <button className="manager-add__form__btn" onclick={this.handleAddClick.bind(this)}>提交</button>
+	  	            </div>
+	  	          </form>
+	  	        </div>
+	  	      )
+	  	    }
+	  	  })
+	  	  var ManagerAll = React.createClass({
+	  	    render: function () {
+	  	      return (
+	  	        <div>
+	  	          <ManagerHeader />
+	  	          <ManagerInfo />
+	  	          <ManagerNewAdd />
+	  	        </div>
+	  	      )
+	  	    }
+	  	  })
+	  	  ReactDOM.render(
+	  	    <ManagerAll />,
+	  	    document.getElementById('example')
+	  	  )
+	  </script>
+	</body>
+</html>
