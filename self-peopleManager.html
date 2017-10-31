@@ -124,61 +124,64 @@
 	  	    }
 	  	  })
 	  	  var ManagerNewAdd = React.createClass({
-	  	    handleAddClick (evt) {
-	  	      evt.preventDefault();
-	  	      let item = {};
-	  	      let addForm = React.findDOMNode(this.refs.addForm);
-	  	      let sex = addForm.querySelector('#addSex');
-	  	      let identity = addForm.querySelector('#addDescrible');
-	  	      let single_desc = addForm.querySelector('#addSingle');
-	  	      
-	  	      item.name = addForm.querySelector('#addName').value();
-	  	      item.age = addForm.querySelector('#addAge').value();
-	  	      item.identity = identity.option[identity.selectedIndex].value;
-	  	      item.sex = sex.option[sex.selectedIndex].value;
-	  	      
-	  	      if ('' == item.name || '' == item.age || '' == item.identity) {
-	  	        this.refs.tipsUnDone.display = 'block';
-	  	        return;
-	  	      }
-	  	      
-	  	      managerArr.push(item);
-	  	      addForm.reset();
-	  	    },
-	  	    render() {
-	  	      return (
-	  	        <div className="manager-add" ref="addForm">
-	  	          <h3 className="manager-add__title">人员新增</h3>
-	  	          <form className="manager-add__form" ref="addForm">
-	  	            <label>姓名</label>
-	  	            <input type="text" name="" id="addName" value="" placeholder="You Name"/>
-	  	            <label>年龄</label>
-	  	            <input type="number" name="" id="addAge" value="" placeholder="Your Age(0-150)"/>
-	  	            <label>性别</label>
-	  	            <select className="manager-add__form__select" id="addSex">
-	  	              <option>男</option>
-	  	              <option>女</option>
-	  	            </select>
-	  	            <label>身份描述</label>
-	  	            <select className="manager-add__form__select" id="addDescrible">
-	  	              <option>boss</option>
+	  	    render(){
+	  	      let handleAddClick = {
+            onClick: function () {
+              let item = {};
+              let addForm = React.findDOMNode(this.refs.addForm); 
+              let sex = addForm.querySelector('#addSex');
+              let identity = addForm.querySelector('#addDescrible');
+              let single_desc = addForm.querySelector('#addSingle');
+            
+              item.name = addForm.querySelector('#addName').value(); 
+              item.age = addForm.querySelector('#addAge').value();
+              item.identity = identity.option[identity.selectedIndex].value;
+              item.sex = sex.option[sex.selectedIndex].value;
+            
+              if ('' == item.name || '' == item.age || '' == item.identity) {
+                this.refs.tipsUnDone.display = 'block';
+                return;
+              }
+           
+              managerArr.push(item);
+              addForm.reset();
+            }
+          }
+          
+          return (
+              <div className="manager-add" ref="addForm">
+                <h3 className="manager-add__title">人员新增</h3>
+                <form className="manager-add__form" ref="addForm">
+                  <label>姓名</label>
+                  <input type="text" name="" id="addName" value="" placeholder="You Name"/>
+                  <label>年龄</label>
+                  <input type="number" name="" id="addAge" value="" placeholder="Your Age(0-150)"/>
+                  <label>性别</label>
+                  <select className="manager-add__form__select" id="addSex">
+                    <option>男</option>
+                    <option>女</option>
+                  </select>
+                  <label>身份描述</label>
+                  <select className="manager-add__form__select" id="addDescrible">
+                    <option>boss</option>
                   <option>manager</option>
                   <option>group lader</option>
                   <option>gril</option>
                   <option>boy</option>
-	  	            </select>
-	  	            <label>个人描述</label>
-	  	            <textarea id="addSingle"></textarea>
-	  	            <p ref="tips" className="tips">提交成功</p>
-	  	            <p ref="tipsUnDone" className="tips">请录入完整的人员信息</p>
-	  	            <p ref="tipsAge" className="tips">请录入正确的年龄</p>
-	  	            <div>
-	  	            <button className="manager-add__form__btn" onclick={this.handleAddClick.bind(this)}>提交</button>
-	  	            </div>
-	  	          </form>
-	  	        </div>
-	  	      )
+                  </select>
+                  <label>个人描述</label>
+                  <textarea id="addSingle"></textarea>
+                  <p ref="tips" className="tips">提交成功</p>
+                  <p ref="tipsUnDone" className="tips">请录入完整的人员信息</p>
+                  <p ref="tipsAge" className="tips">请录入正确的年龄</p>
+                  <div>
+                  <button className="manager-add__form__btn" {...handleAddClick}>提交</button>
+                  </div>
+                </form>
+              </div>
+            )
 	  	    }
+	  	    
 	  	  })
 	  	  var ManagerAll = React.createClass({
 	  	    render: function () {

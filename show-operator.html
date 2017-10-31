@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+	</head>
+	<body>
+	  <div id="example"></div>
+	  <script type="text/babel">
+	  	  let Info = React.createClass({
+	  	    render(){
+	  	      let objArr = {
+	  	        'age': 10,
+	  	        'data-age': 11,
+	  	        'name': '喵喵',
+	  	        'onClick'(){
+	  	          console.log('ass');
+	  	        }
+	  	      }
+	  	      let eventFn = {
+	  	        onClick: function () {
+	  	          alert('1')
+	  	        }
+	  	      }
+	  	      return <p {...eventFn}>花花</p>
+	  	    }
+	  	  })
+	  	  ReactDOM.render(
+	  	    <Info />,
+	  	    document.getElementById('example')
+	  	  )
+	  </script>
+	</body>
+</html>

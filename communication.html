@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+	</head>
+	<body>
+	  <div id="example"></div>
+	  <script type="text/babel">
+	    //组件间的通信     子父通信
+	    //子组件与父组件通信，不同于Angular.js的数据双向绑定，在React中默认支持子同步父的数据
+      //若想实现父同步子的数据，则需要在子数据发生改变的时候，调用执行父props传来的回调，从而达到父的同步更新
+      class Info extends React.Component{
+        constructor(props) {
+          super(props);
+          this.state = {};
+        }
+        inputChange(e) {
+          this.props.inputChange(e.target.value);
+        }
+        render() {
+          return <p>
+            [InputItem]: <input title={this.props.title} onChange={this.inputChange.bind(this)} />
+          </p>
+        }
+      }
+      class Page extends React.Component{
+        constructor(props) {
+          super(props);
+          this.state = {
+            inputValue: ''
+          };
+        }
+        inputChange(inputValue) {
+          this.setState({
+            inputValue,
+          })
+        }
+        render(){
+          return (
+            <div>
+              <p>[page-input]: <input type="input" value={this.state.inputValue}/></p>
+              <Info inputChange={this.inputChange.bind(this)} />
+              <Info inputChange={this.inputChange.bind(this)} />
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(
+        <Page />,
+        document.getElementById('example')
+      )
+	  </script>
+	</body>
+</html>

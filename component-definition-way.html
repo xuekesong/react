@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+	</head>
+	<body>
+	  <div id="example"></div>
+	  <div id="example2"></div>
+	  <!--组件的三种定义方式-->
+	  <script type="text/babel">
+	    //1.函数式定义
+	    
+	    function Info (props) {
+	      return <p>{props.name}</p>
+	    }
+	    ReactDOM.render(
+	      <Info name="Jack" />,
+	      document.getElementById('example')
+	    )
+	    //2. React.createClass()
+	    let Info1 = React.createClass({
+	      getInitialState() {
+	        return {
+	           name: this.props.name || 'myName' 
+	        }
+	      },
+	      getDefaultProps() {
+	        return {
+	          year: new Date().getFullYear()
+	        }
+	      },
+	      showYear(e) {
+	        let elem = ReactDOM.findDOMNode(e.target);
+	        console.log('year ' + elem.getAttribute('data-year'));
+	      },
+	      render() {
+	        return <p onClick={this.showYear} data-year={this.props.year}>{this.state.name}</p>
+	      }
+	    })
+	    //3. extends React.Component   ES6的类形式
+	    class Info2 extends React.Component{
+	      constructor(props) {
+	        super(props);
+	        this.state = {
+	          name: this.props.name || 'myName'
+	        }
+	      }
+	      
+	      showYear(e) {
+	        console.log(this);
+	        let elem = ReactDOM.findDOMNode(e.target);
+	        console.log('year '+ elem.getAttribute('date-year'));
+	      }
+	      render() {
+	        return <p onClick={this.showYear} data-year={this.props.year}>{this.state.name}</p>
+	      }
+	    }
+	    Info2.defaultProps = {
+	      year: new Date().getFullYear()
+	    }
+	    ReactDOM.render(
+	      <Info2 name="smail"/>,
+	      document.getElementById('example2')
+	    )
+	  </script>
+	</body>
+</html>
