@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      //兄弟通信
+      //如果要实现兄弟之间（或者两个没什么关系的组件）的数据同步，就得结合父与子、子与父的方式
+      
+      class Info extends React.Component{
+        constructor(props) {
+          super(props);
+          this.state = {};
+        }
+        inputChange(e) {
+          this.props.inputChange(e.target.value);
+        }
+        render() {
+          return <p>
+            [InputItem]: <input title={this.props.title} onChange={this.inputChange.bind(this)} value={this.props.inputValue}/>
+          </p>
+        }
+      }
+      class Page extends React.Component{
+        constructor(props) {
+          super(props);
+          this.state = {
+            inputValue: ''
+          };
+        }
+        inputChange(inputValue) {
+          this.setState({
+            inputValue
+          })
+        }
+        render(){
+          return (
+            <div>
+              <p>[page-input]: <input type="input" value={this.state.inputValue}/></p>
+              <Info inputChange={this.inputChange.bind(this)} inputValue={this.state.inputValue}/>
+              <Info inputChange={this.inputChange.bind(this)} inputValue={this.state.inputValue}/>
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(
+        <Page />,
+        document.getElementById('example')
+      )
+    </script>
+  </body>
+</html>
