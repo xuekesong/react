@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+    <script src="complate-example/js/jquery.js"></script>
+	</head>
+	<body>
+	  <div id="example"></div>
+	  
+	  <script type="text/babel">
+	    class Info extends React.Component{
+	      click(ele) {
+          console.log(ele+'ele');
+        }
+        
+        constructor(props) {
+          super(props);
+          this.state = {
+            list: ''
+          };
+        }
+      
+        componentDidMount() {
+          let _this = this;
+          let data_list = '';
+          $.ajax({
+            url: this.props.ajax_url,
+            type: 'GET',
+            success({code,data,msg}){
+             console.log(data)
+             data_list = data;
+             _this.setState({
+               list: data_list
+             })
+             console.log(_this.state.list)
+            }
+          })
+           
+        }
+        
+        render() {
+          return (
+            <div>
+              <ul>
+              {this.props.arr.map((e, index)=>{
+                return <li onClick={this.click.bind(e)}>{e}</li>
+              })}
+            </ul>
+            <p>{this.state.list}</p>
+            </div>
+            )
+        }
+	    }
+	  	  ReactDOM.render(
+	  	    <Info  arr = {['a', 's', 'd', 'x', 'd', 's', 'w', 'v', 'z', 'r']} ajax_url = "js/for-loop.json"/>,
+	  	    document.getElementById('example')
+	  	  )
+	  </script>
+	</body>
+</html>
