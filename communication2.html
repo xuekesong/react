@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <script src="js/react.min.js"></script>
+    <script src="js/react-dom.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+	</head>
+	<body>
+	  <div id="example"></div>
+	  <script type="text/babel">
+	    //组建之间的通信
+	    //父组件
+	    var FirstComponent = React.createClass({
+	      render(){
+	        var _this = this;
+	        return (
+	          <div>
+	            <h1>{this.props.title}</h1>
+	            <input type="button" value={this.props.send} />
+	            <ul>
+	              {
+	                this.props.listArr.map(function (item, index) {
+	                  //这里通过listArr将listArr的值传给子组件，并将函数传给子组件
+	                  return <ListComponent listArr={_this.props.listArr} getItemValue={_this.getItemValue}/>
+	                })
+	              }
+	            </ul>
+	          </div>
+	        )
+	      },
+        getItemValue(data){
+          console.log(data);
+        }
+	    })
+	    
+	    //ul组件
+	    var ListComponent = React.createClass({
+	      render(){
+	        return (
+	          <div>
+	            <input type="button" onClick={this.getItem}/>
+	            <ul>
+	            	  {
+	            	    this.props.listArr.map(function (item, index) {
+	            	      return <ItemComponent key={index} item={item}/>
+	            	    })
+	            	  }
+	            </ul>
+	          </div>
+	        )
+	      },
+	      getItem(){
+	        //子组件通过执行回调函数，将data传给父组件
+	        this.props.getItemValue({
+	          name: 'jack',
+	          age: '15',
+	          sex: 'boy'
+	        })
+	      }
+	    })
+	    //li组件
+	    var ItemComponent = React.createClass({
+	      render(){
+	        return (
+	          <li>{this.props.item}</li>
+	        )
+	      }
+	    })
+	    var obj = {
+	      title: 'react组件',
+	      send: '提交',
+	      listArr: [1,2,3,4,5]
+	    }
+	    //渲染
+	    ReactDOM.render(
+	    <FirstComponent {...obj} />,
+	    document.getElementById('example')
+	    )
+	  </script>
+	</body>
+</html>
