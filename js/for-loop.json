@@ -2,7 +2,7 @@
 "code": 0,
 "msg": "ok",
 "data": {
-"has_more": true,
+"has_more": "json-show",
 "users": [
 {
 "talent_label": "silver_1",
